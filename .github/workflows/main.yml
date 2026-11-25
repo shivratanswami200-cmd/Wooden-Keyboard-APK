@@ -18,13 +18,378 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Accept Android SDK Licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.4'
+
+      - name: Auto-Fix Android Project & Build
+        run: |
+          rm -rf build.gradle settings.gradle gradle.properties app/build.gradle app/src/main/AndroidManifest.xml app/src/main/res/xml/method.xml app/src/main/java/com/wooden/keyboard
+          mkdir -p app/src/main/res/xml
+          mkdir -p app/src/main/java/com/wooden/keyboard
+          mkdir -p app/src/main/assets
+
+          cat << 'EOF' > settings.gradle
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+          rootProject.name = "WoodenKeyboard"
+          include ':app'
+          EOF
+
+          cat << 'EOF' > gradle.properties
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          android.useAndroidX=true
+          android.nonTransitiveRClass=true
+          EOF
+
+          cat << 'EOF' > build.gradle
+          plugins {
+              id 'com.android.application' version '8.1.4' apply false
+              id 'org.jetbrains.kotlin.android' version '1.9.10' apply false
+          }
+          EOF
+
+          cat << 'EOF' > app/build.gradle
+          plugins {
+              id 'com.android.application'
+              id 'org.jetbrains.kotlin.android'
+          }
+          android {
+              namespace 'com.wooden.keyboard'
+              compileSdk 34
+              defaultConfig {
+                  applicationId "com.wooden.keyboard"
+                  minSdk 23
+                  targetSdk 34
+                  versionCode 1
+                  versionName "1.0"
+              }
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+              kotlinOptions {
+                  jvmTarget = '17'
+              }
+          }
+          dependencies {
+              implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.10'
+          }
+          EOF
+
+          cat << 'EOF' > app/src/main/AndroidManifest.xml
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+              <uses-permission android:name="android.permission.RECORD_AUDIO" />
+              <uses-permission android:name="android.permission.VIBRATE" />
+              <application
+                  android:allowBackup="true"
+                  android:label="Wooden Keyboard"
+                  android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+                  <service
+                      android:name=".WoodenKeyboardService"
+                      android:label="Pure Wooden Keyboard"
+                      android:permission="android.permission.BIND_INPUT_METHOD"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.view.InputMethod" />
+                      </intent-filter>
+                      <meta-data
+                          android:name="android.view.im"
+                          android:resource="@xml/method" />
+                  </service>
+              </application>
+          </manifest>
+          EOF
+
+          cat << 'EOF' > app/src/main/res/xml/method.xml
+          <?xml version="1.0" encoding="utf-8"?>
+          <input-method xmlns:android="http://schemas.android.com/apk/res/android"
+              android:settingsActivity="com.wooden.keyboard.MainActivity"
+              android:supportsSwitchingToNextInputMethod="true">
+              <subtype
+                  android:label="English &amp; Hindi"
+                  android:imeSubtypeLocale="en_IN"
+                  android:imeSubtypeMode="keyboard" />
+          </input-method>
+          EOF
+
+          cat << 'EOF' > app/src/main/java/com/wooden/keyboard/MainActivity.kt
+          package com.wooden.keyboard
+
+          import android.Manifest
+          import android.app.Activity
+          import android.content.Context
+          import android.content.Intent
+          import android.content.pm.PackageManager
+          import android.graphics.Color
+          import android.graphics.Typeface
+          import android.graphics.drawable.GradientDrawable
+          import android.os.Build
+          import android.os.Bundle
+          import android.provider.Settings
+          import android.view.Gravity
+          import android.view.inputmethod.InputMethodManager
+          import android.widget.Button
+          import android.widget.EditText
+          import android.widget.LinearLayout
+          import android.widget.TextView
+
+          class MainActivity : Activity() {
+              override fun onCreate(savedInstanceState: Bundle?) {
+                  super.onCreate(savedInstanceState)
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                      checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
+                  ) {
+                      requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 101)
+                  }
+                  val root = LinearLayout(this).apply {
+                      orientation = LinearLayout.VERTICAL
+                      gravity = Gravity.CENTER
+                      setBackgroundColor(Color.parseColor("#140b05"))
+                      setPadding(48, 48, 48, 48)
+                  }
+                  val title = TextView(this).apply {
+                      text = "Pure Wooden Keyboard"
+                      textSize = 26f
+                      setTypeface(null, Typeface.BOLD)
+                      setTextColor(Color.parseColor("#c89668"))
+                      gravity = Gravity.CENTER
+                  }
+                  val subtitle = TextView(this).apply {
+                      text = "Step 1: Enable in Settings\nStep 2: Select Wooden Keyboard"
+                      textSize = 15f
+                      setTextColor(Color.parseColor("#9e6b41"))
+                      gravity = Gravity.CENTER
+                      setPadding(0, 18, 0, 48)
+                  }
+                  val btnEnable = createWoodButton("1. Enable Wooden Keyboard") {
+                      startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
+                  }
+                  val btnSelect = createWoodButton("2. Select Wooden Keyboard") {
+                      val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                      imm.showInputMethodPicker()
+                  }
+                  val testBox = EditText(this).apply {
+                      hint = "Tap here to test typing..."
+                      setHintTextColor(Color.parseColor("#7a4a29"))
+                      setTextColor(Color.parseColor("#e3be91"))
+                      setPadding(32, 28, 32, 28)
+                      background = GradientDrawable().apply {
+                          setColor(Color.parseColor("#231106"))
+                          cornerRadius = 24f
+                          setStroke(3, Color.parseColor("#86542f"))
+                      }
+                      val lp = LinearLayout.LayoutParams(
+                          LinearLayout.LayoutParams.MATCH_PARENT,
+                          LinearLayout.LayoutParams.WRAP_CONTENT
+                      )
+                      lp.topMargin = 48
+                      layoutParams = lp
+                  }
+                  root.addView(title)
+                  root.addView(subtitle)
+                  root.addView(btnEnable)
+                  root.addView(btnSelect)
+                  root.addView(testBox)
+                  setContentView(root)
+              }
+
+              private fun createWoodButton(label: String, onClick: () -> Unit): Button {
+                  return Button(this).apply {
+                      text = label
+                      textSize = 16f
+                      setTypeface(null, Typeface.BOLD)
+                      setTextColor(Color.parseColor("#1f0c02"))
+                      isAllCaps = false
+                      background = GradientDrawable(
+                          GradientDrawable.Orientation.TOP_BOTTOM,
+                          intArrayOf(Color.parseColor("#a36d43"), Color.parseColor("#734524"))
+                      ).apply {
+                          cornerRadius = 28f
+                          setStroke(3, Color.parseColor("#2b1407"))
+                      }
+                      val lp = LinearLayout.LayoutParams(
+                          LinearLayout.LayoutParams.MATCH_PARENT,
+                          LinearLayout.LayoutParams.WRAP_CONTENT
+                      )
+                      lp.bottomMargin = 28
+                      layoutParams = lp
+                      setOnClickListener { onClick() }
+                  }
+              }
+          }
+          EOF
+
+          cat << 'EOF' > app/src/main/java/com/wooden/keyboard/WoodenKeyboardService.kt
+          package com.wooden.keyboard
+
+          import android.annotation.SuppressLint
+          import android.content.Context
+          import android.content.Intent
+          import android.graphics.Color
+          import android.inputmethodservice.InputMethodService
+          import android.os.Build
+          import android.os.VibrationEffect
+          import android.os.Vibrator
+          import android.provider.Settings
+          import android.view.KeyEvent
+          import android.view.View
+          import android.view.ViewGroup
+          import android.view.inputmethod.EditorInfo
+          import android.view.inputmethod.InputMethodManager
+          import android.webkit.JavascriptInterface
+          import android.webkit.PermissionRequest
+          import android.webkit.WebChromeClient
+          import android.webkit.WebView
+          import android.webkit.WebViewClient
+          import android.widget.FrameLayout
+
+          class WoodenKeyboardService : InputMethodService() {
+              private var webView: WebView? = null
+
+              @SuppressLint("SetJavaScriptEnabled")
+              override fun onCreateInputView(): View {
+                  val density = resources.displayMetrics.density
+                  val keyboardHeightPx = (292 * density).toInt()
+                  val container = FrameLayout(this).apply {
+                      layoutParams = ViewGroup.LayoutParams(
+                          ViewGroup.LayoutParams.MATCH_PARENT,
+                          keyboardHeightPx
+                      )
+                      setBackgroundColor(Color.parseColor("#140b05"))
+                  }
+                  webView = WebView(this).apply {
+                      layoutParams = FrameLayout.LayoutParams(
+                          ViewGroup.LayoutParams.MATCH_PARENT,
+                          keyboardHeightPx
+                      )
+                      setBackgroundColor(Color.parseColor("#140b05"))
+                      settings.javaScriptEnabled = true
+                      settings.domStorageEnabled = true
+                      settings.allowFileAccess = true
+                      settings.mediaPlaybackRequiresUserGesture = false
+                      addJavascriptInterface(KeyboardBridge(), "AndroidIME")
+                      webViewClient = WebViewClient()
+                      webChromeClient = object : WebChromeClient() {
+                          override fun onPermissionRequest(request: PermissionRequest?) {
+                              request?.grant(request.resources)
+                          }
+                      }
+                      loadUrl("file:///android_asset/index.html")
+                  }
+                  container.addView(webView)
+                  return container
+              }
+
+              override fun onComputeInsets(outInsets: Insets?) {
+                  super.onComputeInsets(outInsets)
+                  if (!isFullscreenMode) {
+                      outInsets?.contentTopInsets = outInsets?.visibleTopInsets ?: 0
+                  }
+              }
+
+              inner class KeyboardBridge {
+                  @JavascriptInterface
+                  fun commitText(text: String) {
+                      currentInputConnection?.commitText(text, 1)
+                      triggerHaptic()
+                  }
+
+                  @JavascriptInterface
+                  fun deleteBack() {
+                      val ic = currentInputConnection ?: return
+                      val selected = ic.getSelectedText(0)
+                      if (selected.isNullOrEmpty()) {
+                          ic.deleteSurroundingText(1, 0)
+                      } else {
+                          ic.commitText("", 1)
+                      }
+                      triggerHaptic()
+                  }
+
+                  @JavascriptInterface
+                  fun sendEnter() {
+                      val ic = currentInputConnection ?: return
+                      val editorInfo = currentInputEditorInfo
+                      val action = editorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION) ?: EditorInfo.IME_ACTION_NONE
+                      val noEnterAction = ((editorInfo?.imeOptions ?: 0) and EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0
+                      if (action != EditorInfo.IME_ACTION_NONE &&
+                          action != EditorInfo.IME_ACTION_UNSPECIFIED &&
+                          !noEnterAction
+                      ) {
+                          ic.performEditorAction(action)
+                      } else {
+                          ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+                          ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
+                      }
+                      triggerHaptic()
+                  }
+
+                  @JavascriptInterface
+                  fun selectAllText() {
+                      currentInputConnection?.performContextMenuAction(android.R.id.selectAll)
+                  }
+
+                  @JavascriptInterface
+                  fun copySelectedText() {
+                      currentInputConnection?.performContextMenuAction(android.R.id.copy)
+                  }
+
+                  @JavascriptInterface
+                  fun pasteClipboardText() {
+                      currentInputConnection?.performContextMenuAction(android.R.id.paste)
+                  }
+
+                  @JavascriptInterface
+                  fun switchKeyboard() {
+                      val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                      imm.showInputMethodPicker()
+                  }
+
+                  @JavascriptInterface
+                  fun openInputSettings() {
+                      val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS).apply {
+                          addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                      }
+                      startActivity(intent)
+                  }
+
+                  private fun triggerHaptic() {
+                      try {
+                          val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+                          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                              vibrator?.vibrate(VibrationEffect.createOneShot(18, VibrationEffect.DEFAULT_AMPLITUDE))
+                          } else {
+                              @Suppress("DEPRECATION")
+                              vibrator?.vibrate(18)
+                          }
+                      } catch (_: Exception) {}
+                  }
+              }
+          }
+          EOF
 
       - name: Build Debug APK
         run: gradle assembleDebug --no-daemon --stacktrace
