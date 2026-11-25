@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.wooden.keyboard.MainActivity"
+    android:supportsSwitchingToNextInputMethod="true">
+    <subtype
+        android:label="English &amp; Hindi"
+        android:imeSubtypeLocale="en_IN"
+        android:imeSubtypeMode="keyboard" />
+</input-method>
