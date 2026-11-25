@@ -13,8 +13,8 @@
     }
 
     html, body {
+      height: 100%;
       width: 100%;
-      height: auto;
       background: #140b05;
       display: flex;
       flex-direction: column;
@@ -26,125 +26,29 @@
     .wood-keyboard-shell {
       position: relative;
       width: 100%;
-      border-radius: 18px 18px 0 0;
-      padding: 6px 5px 8px;
+      height: 100%;
+      border-radius: 16px 16px 0 0;
+      padding: 6px 5px 7px;
       background: linear-gradient(180deg, #986238 0%, #6d4121 50%, #482711 100%);
       border-top: 2px solid #9c673d;
-      border-left: 2px solid #8a5731;
-      border-right: 2px solid #593318;
-      box-shadow:
-        0 -8px 25px rgba(0, 0, 0, 0.85),
-        inset 0 2px 3px rgba(154, 102, 62, 0.35);
+      border-left: 1.5px solid #8a5731;
+      border-right: 1.5px solid #593318;
+      box-shadow: inset 0 2px 3px rgba(154, 102, 62, 0.35);
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      justify-content: flex-end;
+      gap: 4px;
       user-select: none;
-    }
-
-    .linen-strip {
-      position: relative;
-      width: 100%;
-      height: 40px;
-      border-radius: 12px;
-      padding: 4px 9px;
-      background-color: #9e6b41;
-      background-image:
-        repeating-linear-gradient(90deg, rgba(72, 42, 20, 0.22) 0px, rgba(72, 42, 20, 0.22) 1px, transparent 1px, transparent 5px),
-        repeating-linear-gradient(0deg, rgba(72, 42, 20, 0.14) 0px, rgba(72, 42, 20, 0.14) 1px, transparent 1px, transparent 5px),
-        radial-gradient(circle at 50% 45%, #ad794d 0%, #926037 80%, #764925 100%);
-      border: 1.5px solid #4e2b13;
-      box-shadow:
-        inset 0 4px 10px rgba(38, 20, 8, 0.65),
-        inset 0 -2px 4px rgba(148, 98, 58, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .toolbar-toggle-btn {
-      width: 30px;
-      height: 30px;
-      border: none;
-      background: transparent;
-      display: grid;
-      grid-template-columns: repeat(2, 8.5px);
-      grid-template-rows: repeat(2, 8.5px);
-      gap: 3px;
-      align-content: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .toolbar-toggle-btn span {
-      border-radius: 2px;
-      background: linear-gradient(180deg, #542f16 0%, #2d1406 100%);
-      box-shadow: 0 1px 0 rgba(154, 102, 62, 0.45);
-    }
-
-    .strip-quick-actions {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      gap: 5px;
-    }
-
-    .strip-chip {
-      height: 28px;
-      padding: 0 10px;
-      border-radius: 8px;
-      border: none;
-      background: linear-gradient(180deg, #986239 0%, #734524 100%);
-      border-top: 1.5px solid #a66f44;
-      border-bottom: 2px solid #301708;
-      color: #210d03;
-      font-size: 11px;
-      font-weight: 800;
-      text-shadow: 0 1px 0 rgba(154, 102, 62, 0.4);
-      cursor: pointer;
-    }
-
-    .strip-chip:active {
-      transform: translateY(1.5px);
-    }
-
-    .mic-puck-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      flex-shrink: 0;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 35% 28%, #9c663c 0%, #7d4d2a 58%, #543016 100%);
-      border-top: 1.5px solid #a87145;
-      border-bottom: 2.5px solid #301708;
-      box-shadow: 0 3px 6px rgba(32, 16, 6, 0.62), inset 0 2px 3px rgba(154, 102, 62, 0.32);
-    }
-
-    .mic-puck-btn.active {
-      box-shadow: 0 0 10px #7d4a26, inset 0 2px 5px rgba(154, 102, 62, 0.5);
-      transform: scale(0.95);
-    }
-
-    .mic-puck-btn svg {
-      width: 17px;
-      height: 17px;
-      fill: #210d03;
-      filter: drop-shadow(0 1px 0 rgba(154, 102, 62, 0.42));
     }
 
     .quick-utility-bar {
       display: none;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(7, 1fr);
       gap: 4px;
       padding: 4px;
-      border-radius: 11px;
+      border-radius: 10px;
       background: #231106;
+      border: 1px solid #86542f;
     }
 
     .quick-utility-bar.open {
@@ -153,30 +57,29 @@
 
     .util-chip {
       height: 30px;
-      border-radius: 8px;
+      border-radius: 7px;
       border: none;
       background: linear-gradient(180deg, #986239 0%, #734524 100%);
       border-top: 1.5px solid #a66f44;
-      border-bottom: 2.5px solid #301708;
+      border-bottom: 2px solid #301708;
       color: #210d03;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
-      text-shadow: 0 1px 0 rgba(154, 102, 62, 0.4);
       cursor: pointer;
     }
 
     .util-chip:active {
-      transform: translateY(1.5px);
+      transform: translateY(1px);
     }
 
     .clipboard-drawer {
       display: none;
       flex-direction: column;
-      gap: 6px;
-      padding: 8px;
-      border-radius: 13px;
+      gap: 5px;
+      padding: 6px;
+      border-radius: 11px;
       background: #231106;
-      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.85);
+      flex: 1;
     }
 
     .clipboard-drawer.active {
@@ -188,59 +91,53 @@
       justify-content: space-between;
       align-items: center;
       color: #b48258;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
-      padding: 0 4px;
     }
 
     .clip-close-btn {
-      padding: 4px 10px;
-      border-radius: 8px;
+      padding: 3px 9px;
+      border-radius: 7px;
       border: none;
       background: #8a5631;
       color: #210d03;
       font-weight: 800;
       font-size: 11px;
-      cursor: pointer;
     }
 
     .clip-list {
-      height: 175px;
+      flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
     }
 
     .clip-item {
-      padding: 8px 11px;
-      border-radius: 9px;
+      padding: 7px 10px;
+      border-radius: 8px;
       border: none;
       text-align: left;
       background: linear-gradient(180deg, #986239 0%, #754625 100%);
       border-top: 1.5px solid #a66f44;
-      border-bottom: 2.5px solid #301708;
+      border-bottom: 2px solid #301708;
       color: #210d03;
-      font-family: 'Brush Script MT', 'Segoe Script', 'Apple Chancery', 'Lucida Handwriting', cursive;
-      font-size: 18px;
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-size: 17px;
       font-weight: 600;
-      text-shadow: 0 1px 0 rgba(154, 102, 62, 0.4);
-      cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .clip-item:active {
-      transform: translateY(2px);
-    }
-
     .wood-rack {
+      flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       gap: 4px;
-      padding: 4px 3px;
-      border-radius: 13px;
+      padding: 5px 3px;
+      border-radius: 12px;
       background: #1b0d05;
       box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.94);
     }
@@ -248,184 +145,178 @@
     .k-row {
       display: flex;
       justify-content: center;
-      gap: 3.5px;
-      padding-bottom: 4px;
-      border-bottom: 3.5px solid #86542f;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.78);
+      gap: 3px;
+      padding-bottom: 3.5px;
+      border-bottom: 3px solid #86542f;
     }
 
     .k-row.no-shelf {
       border-bottom: none;
       padding-bottom: 0;
-      box-shadow: none;
     }
 
     .w-key {
       position: relative;
       flex: 1;
-      height: 44px;
+      height: 42px;
       min-width: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Brush Script MT', 'Segoe Script', 'Apple Chancery', 'Lucida Handwriting', cursive;
-      font-size: 19.5px;
+      font-size: 19px;
       font-weight: 700;
       color: #1f0c02;
-      text-shadow:
-        0 1px 0 rgba(154, 102, 62, 0.42),
-        0 -0.8px 0.8px rgba(16, 6, 1, 0.45);
+      text-shadow: 0 1px 0 rgba(154, 102, 62, 0.42);
       background-color: #8b5832;
       border-top: 1.5px solid #a36d43;
-      border-left: 1.5px solid #966139;
-      border-right: 1.5px solid #45230d;
-      border-bottom: 4px solid #2b1407;
+      border-left: 1px solid #966139;
+      border-right: 1px solid #45230d;
+      border-bottom: 3.5px solid #2b1407;
       box-shadow:
-        0 4px 6px rgba(6, 2, 0, 0.84),
-        0 1.5px 0 #381909,
+        0 3px 5px rgba(6, 2, 0, 0.84),
         inset 0 2px 3px rgba(158, 106, 65, 0.28),
         inset 0 -3px 5px rgba(32, 14, 4, 0.72);
       background-size: 100% 100%;
-      transition: transform 0.07s ease, border-bottom-width 0.07s ease, box-shadow 0.07s ease;
       -webkit-tap-highlight-color: transparent;
     }
 
     .w-key:active {
-      transform: translateY(2.5px);
+      transform: translateY(2px);
       border-bottom-width: 1.5px;
-      box-shadow:
-        0 1px 3px rgba(6, 2, 0, 0.88),
-        inset 0 3px 6px rgba(22, 9, 2, 0.82);
     }
 
     .w-key.hindi-char {
-      font-family: 'Noto Sans Devanagari', 'Mangal', 'Segoe UI', sans-serif;
+      font-family: 'Noto Sans Devanagari', 'Mangal', sans-serif;
       font-size: 15.5px;
       font-weight: 800;
     }
 
     .w-key.num-key {
-      height: 34px;
+      height: 33px;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
     }
 
-    .w-key.wide-15 {
-      flex: 1.45;
-    }
+    .w-key.wide-15 { flex: 1.45; }
 
     .w-key.pill-sym {
-      flex: 1.45;
-      border-radius: 22px;
+      flex: 1.3;
+      border-radius: 20px;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      font-size: 12.5px;
+      font-size: 11.5px;
       font-weight: 800;
+    }
+
+    /* Compact 4-dot Menu Button right next to Spacebar */
+    .w-key.menu-compact-btn {
+      flex: 0.95;
+      padding: 0;
+    }
+
+    .menu-dots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 6.5px);
+      grid-template-rows: repeat(2, 6.5px);
+      gap: 2.5px;
+    }
+
+    .menu-dots-grid span {
+      border-radius: 1.5px;
+      background: #1f0c02;
+      box-shadow: 0 1px 0 rgba(154, 102, 62, 0.4);
     }
 
     .w-key.space-bar {
-      flex: 4.2;
-      border-radius: 10px;
-      font-family: 'Brush Script MT', 'Segoe Script', 'Apple Chancery', 'Lucida Handwriting', cursive;
-      font-size: 17px;
-      letter-spacing: 0.6px;
+      flex: 3.6;
+      border-radius: 9px;
+      font-size: 16.5px;
       color: #1f0c02;
     }
 
     .w-key.enter-wood-pill {
-      flex: 1.75;
-      border-radius: 22px;
+      flex: 1.55;
+      border-radius: 20px;
     }
 
     .w-key svg {
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       fill: none;
       stroke: #1f0c02;
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
-      filter: drop-shadow(0 1px 0 rgba(154, 102, 62, 0.42));
     }
 
     .w-key.caps-on {
-      border-top-color: #b0784c;
-      box-shadow: 0 4px 6px rgba(6, 2, 0, 0.84), inset 0 0 8px rgba(156, 104, 62, 0.45);
+      border-top-color: #c99265;
+      box-shadow: inset 0 0 8px rgba(180, 125, 80, 0.5);
     }
 
     .lang-popup {
       position: absolute;
-      bottom: 58px;
+      bottom: 54px;
       left: 50%;
-      transform: translateX(-50%) scale(0.92);
+      transform: translateX(-50%);
       display: none;
       gap: 6px;
       padding: 6px;
-      border-radius: 15px;
+      border-radius: 14px;
       background: linear-gradient(180deg, #5e371b 0%, #361d0c 100%);
       border: 1.5px solid #9c673d;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.88), inset 0 2px 4px rgba(154, 102, 62, 0.3);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
       z-index: 30;
     }
 
-    .lang-popup.show {
-      display: flex;
-      transform: translateX(-50%) scale(1);
-    }
+    .lang-popup.show { display: flex; }
 
     .lang-option-btn {
-      padding: 8px 15px;
-      border-radius: 10px;
+      padding: 7px 14px;
+      border-radius: 9px;
       border: none;
       background: linear-gradient(180deg, #986239 0%, #734524 100%);
       border-top: 1.5px solid #a66f44;
-      border-bottom: 3px solid #2b1407;
+      border-bottom: 2.5px solid #2b1407;
       color: #1f0c02;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
-      text-shadow: 0 1px 0 rgba(154, 102, 62, 0.4);
-      cursor: pointer;
-      white-space: nowrap;
     }
 
     .lang-option-btn.active-lang {
-      background: linear-gradient(180deg, #a66f44 0%, #824f2b 100%);
-      box-shadow: inset 0 0 8px rgba(42, 20, 8, 0.45);
+      background: linear-gradient(180deg, #b57c4e 0%, #8a5631 100%);
     }
 
     .emoji-drawer {
       display: none;
       flex-direction: column;
-      gap: 5px;
-      padding: 5px;
-      border-radius: 13px;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 12px;
       background: #1b0d05;
-      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.85);
+      flex: 1;
     }
 
-    .emoji-drawer.active {
-      display: flex;
-    }
+    .emoji-drawer.active { display: flex; }
 
     .emoji-cats {
       display: flex;
-      justify-content: space-between;
       gap: 4px;
     }
 
     .cat-tab {
       flex: 1;
-      height: 27px;
-      border-radius: 8px;
+      height: 25px;
+      border-radius: 7px;
       border: none;
       background: #5c361b;
       color: #c29368;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      cursor: pointer;
     }
 
     .cat-tab.selected {
@@ -435,62 +326,36 @@
     }
 
     .emoji-grid-scroll {
-      height: 158px;
+      flex: 1;
       overflow-y: auto;
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: 4px;
-      padding: 2px;
+      gap: 3px;
     }
 
     .emo-cell {
-      height: 34px;
-      border-radius: 8px;
+      height: 32px;
+      border-radius: 7px;
       border: none;
       background: rgba(139, 88, 50, 0.35);
-      font-size: 19px;
+      font-size: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-    }
-
-    .emo-cell:active {
-      background: rgba(163, 109, 67, 0.6);
-      transform: scale(0.92);
     }
 
     .emoji-footer {
       display: flex;
-      justify-content: space-between;
       gap: 5px;
     }
   </style>
 </head>
 <body>
-  <section class="wood-keyboard-shell" id="keyboardShell">
-    <div class="linen-strip">
-      <button class="toolbar-toggle-btn" id="utilToggleBtn" title="Menu & Clipboard" aria-label="Menu">
-        <span></span><span></span><span></span><span></span>
-      </button>
-
-      <div class="strip-quick-actions">
-        <button class="strip-chip" id="stripEnBtn">EN</button>
-        <button class="strip-chip" id="stripHiBtn">हिन्दी</button>
-        <button class="strip-chip" id="stripClipBtn">Clipboard</button>
-        <button class="strip-chip" id="stripSwitchBtn">Switch</button>
-      </div>
-
-      <button class="mic-puck-btn" id="voiceBtn" title="Voice Type" aria-label="Voice Type">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>
-        </svg>
-      </button>
-    </div>
-
+  <section class="wood-keyboard-shell">
     <div class="quick-utility-bar" id="utilityBar">
-      <button class="util-chip" id="clipboardMenuBtn">Clipboard</button>
+      <button class="util-chip" id="clipboardMenuBtn">Clip</button>
       <button class="util-chip" id="switchKeyboardBtn">Switch</button>
+      <button class="util-chip" id="voiceChipBtn">Mic</button>
       <button class="util-chip" id="copyBtn">Copy</button>
       <button class="util-chip" id="pasteBtn">Paste</button>
       <button class="util-chip" id="selectAllBtn">Select</button>
@@ -499,7 +364,7 @@
 
     <div class="clipboard-drawer" id="clipboardDrawer">
       <div class="clip-header">
-        <span>Saved Clipboard History (Tap to insert)</span>
+        <span>Saved Clips (Tap to type)</span>
         <button class="clip-close-btn" id="closeClipBtn">Keys</button>
       </div>
       <div class="clip-list" id="clipListContainer"></div>
@@ -526,7 +391,6 @@
   </section>
 
   <script>
-    const keyboardShell = document.getElementById('keyboardShell');
     const mainKeysRack = document.getElementById('mainKeysRack');
     const emojiDrawer = document.getElementById('emojiDrawer');
     const emojiCatsEl = document.getElementById('emojiCats');
@@ -536,9 +400,7 @@
     const langPopup = document.getElementById('langPopup');
     const optEnglish = document.getElementById('optEnglish');
     const optHindi = document.getElementById('optHindi');
-    const utilToggleBtn = document.getElementById('utilToggleBtn');
     const utilityBar = document.getElementById('utilityBar');
-    const voiceBtn = document.getElementById('voiceBtn');
 
     let languageMode = 'EN';
     let shiftMode = 1;
@@ -551,7 +413,7 @@
     const clipboardHistory = [
       'नमस्ते! कैसे हैं आप?',
       'Hello, how are you doing today?',
-      'Sent from my 3D Wooden Keyboard'
+      'धन्यवाद!'
     ];
 
     const naturalWoodSwatches = [
@@ -573,15 +435,10 @@
             <stop offset="52%" stop-color="${s.mid}"/>
             <stop offset="100%" stop-color="${s.base}"/>
           </linearGradient>
-          <filter id="fineGrain">
-            <feTurbulence type="fractalNoise" baseFrequency="0.15 0.016" numOctaves="3" seed="${s.seed}" result="n"/>
-            <feColorMatrix type="matrix" values="0.24 0 0 0 0.12  0.12 0 0 0 0.05  0.03 0 0 0 0.01  0 0 0 0.38 0"/>
-          </filter>
         </defs>
         <rect width="80" height="110" fill="url(#woodTone)"/>
         <path d="M15 0 C24 36, 10 72, 18 110 M41 0 C30 42, 50 74, 39 110 M64 0 C73 32, 58 68, 66 110" fill="none" stroke="${s.grain}" stroke-width="2" opacity="0.44"/>
         <ellipse cx="43" cy="55" rx="13" ry="35" fill="none" stroke="${s.grain}" stroke-width="1.5" opacity="0.34"/>
-        <rect width="80" height="110" filter="url(#fineGrain)"/>
       </svg>`;
       return 'url("data:image/svg+xml;utf8,' + encodeURIComponent(svg) + '")';
     }
@@ -628,15 +485,6 @@
       Nature: ['🌸','🌹','🌺','🌻','🌼','🌷','🌱','🌲','🌳','🍀','🍁','🍂','🍃','🌍','🌙','⭐','☀️','⛅','⛈️','🌈','❄️','💧','🌊','🔥','🦋','🐝','🐶','🐱','🦁','🐯','🦅','🦚']
     };
 
-    function syncHeightToAndroid() {
-      requestAnimationFrame(() => {
-        const h = Math.ceil(keyboardShell.getBoundingClientRect().height);
-        if (h > 0 && window.AndroidIME && window.AndroidIME.updateHeight) {
-          window.AndroidIME.updateHeight(h);
-        }
-      });
-    }
-
     function playClickSound() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -650,7 +498,7 @@
         osc.frequency.setValueAtTime(215 + Math.random() * 35, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(70, ctx.currentTime + 0.038);
 
-        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.setValueAtTime(0.14, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
 
         osc.connect(gain);
@@ -727,7 +575,6 @@
         clipboardDrawer.classList.remove('active');
         emojiDrawer.classList.add('active');
         renderEmojiDrawer();
-        syncHeightToAndroid();
         return;
       }
 
@@ -795,19 +642,19 @@
               holdDeleteTimer = setInterval(() => {
                 deleteFromAndroid();
                 playClickSound();
-              }, 110);
+              }, 100);
             });
             btn.addEventListener('pointerup', () => clearInterval(holdDeleteTimer));
             btn.addEventListener('pointerleave', () => clearInterval(holdDeleteTimer));
           } else if (k === 'MORE_SYM') {
             btn.classList.add('wide-15');
             btn.style.fontFamily = "'Segoe UI', sans-serif";
-            btn.style.fontSize = '12px';
+            btn.style.fontSize = '11.5px';
             btn.textContent = '=\\<';
           } else if (k === 'LESS_SYM') {
             btn.classList.add('wide-15');
             btn.style.fontFamily = "'Segoe UI', sans-serif";
-            btn.style.fontSize = '12px';
+            btn.style.fontSize = '11.5px';
             btn.textContent = '?123';
           } else {
             btn.textContent = (languageMode === 'EN' && symbolPage === 0 && /^[A-Z]$/.test(k))
@@ -831,11 +678,16 @@
       symBtn.textContent = symbolPage === 0 ? '?123' : (languageMode === 'HI' ? 'कखग' : 'ABC');
       symBtn.addEventListener('click', () => pressKey('?123'));
 
-      const commaBtn = document.createElement('button');
-      commaBtn.className = 'w-key';
-      commaBtn.style.backgroundImage = woodTextures[1];
-      commaBtn.textContent = ',';
-      commaBtn.addEventListener('click', () => pressKey(','));
+      /* Compact 4-dot Menu Button placed right beside Spacebar */
+      const menuBtn = document.createElement('button');
+      menuBtn.className = 'w-key menu-compact-btn';
+      menuBtn.style.backgroundImage = woodTextures[6];
+      menuBtn.setAttribute('aria-label', 'Menu');
+      menuBtn.innerHTML = '<div class="menu-dots-grid"><span></span><span></span><span></span><span></span></div>';
+      menuBtn.addEventListener('click', () => {
+        playClickSound();
+        utilityBar.classList.toggle('open');
+      });
 
       const emojiBtn = document.createElement('button');
       emojiBtn.className = 'w-key';
@@ -875,19 +727,15 @@
       const enterBtn = document.createElement('button');
       enterBtn.className = 'w-key enter-wood-pill';
       enterBtn.style.backgroundImage = woodTextures[5];
-      enterBtn.setAttribute('aria-label', 'Enter');
       enterBtn.innerHTML = '<svg viewBox="0 0 24 20"><path d="M20 4v7H6M10 7l-4 4 4 4"/></svg>';
       enterBtn.addEventListener('click', () => pressKey('ENTER'));
 
-      bottomRow.append(symBtn, commaBtn, emojiBtn, spaceBtn, dotBtn, enterBtn);
+      bottomRow.append(symBtn, menuBtn, emojiBtn, spaceBtn, dotBtn, enterBtn);
       mainKeysRack.appendChild(bottomRow);
-      syncHeightToAndroid();
     }
 
     optEnglish.addEventListener('click', () => switchLanguage('EN'));
     optHindi.addEventListener('click', () => switchLanguage('HI'));
-    document.getElementById('stripEnBtn').addEventListener('click', () => switchLanguage('EN'));
-    document.getElementById('stripHiBtn').addEventListener('click', () => switchLanguage('HI'));
 
     function renderClipboardDrawer() {
       clipListContainer.innerHTML = '';
@@ -903,23 +751,19 @@
       });
     }
 
-    function openClipboard() {
+    document.getElementById('clipboardMenuBtn').addEventListener('click', () => {
       playClickSound();
+      utilityBar.classList.remove('open');
       mainKeysRack.style.display = 'none';
       emojiDrawer.classList.remove('active');
       clipboardDrawer.classList.add('active');
       renderClipboardDrawer();
-      syncHeightToAndroid();
-    }
-
-    document.getElementById('stripClipBtn').addEventListener('click', openClipboard);
-    document.getElementById('clipboardMenuBtn').addEventListener('click', openClipboard);
+    });
 
     document.getElementById('closeClipBtn').addEventListener('click', () => {
       playClickSound();
       clipboardDrawer.classList.remove('active');
       mainKeysRack.style.display = 'flex';
-      syncHeightToAndroid();
     });
 
     function renderEmojiDrawer() {
@@ -956,19 +800,12 @@
       playClickSound();
       emojiDrawer.classList.remove('active');
       mainKeysRack.style.display = 'flex';
-      syncHeightToAndroid();
     });
 
     document.getElementById('emoSpaceBtn').addEventListener('click', () => pressKey('SPACE'));
     document.getElementById('emoBackBtn').addEventListener('click', () => pressKey('BACK'));
 
-    utilToggleBtn.addEventListener('click', () => {
-      playClickSound();
-      utilityBar.classList.toggle('open');
-      syncHeightToAndroid();
-    });
-
-    function switchSystemKeyboard() {
+    document.getElementById('switchKeyboardBtn').addEventListener('click', () => {
       playClickSound();
       utilityBar.classList.remove('open');
       if (window.AndroidIME && window.AndroidIME.switchKeyboard) {
@@ -976,46 +813,38 @@
       } else if (window.AndroidIME && window.AndroidIME.openInputSettings) {
         window.AndroidIME.openInputSettings();
       }
-    }
-
-    document.getElementById('stripSwitchBtn').addEventListener('click', switchSystemKeyboard);
-    document.getElementById('switchKeyboardBtn').addEventListener('click', switchSystemKeyboard);
+    });
 
     document.getElementById('copyBtn').addEventListener('click', () => {
       window.AndroidIME?.copySelectedText?.();
       utilityBar.classList.remove('open');
-      syncHeightToAndroid();
     });
 
     document.getElementById('pasteBtn').addEventListener('click', () => {
       window.AndroidIME?.pasteClipboardText?.();
       utilityBar.classList.remove('open');
-      syncHeightToAndroid();
     });
 
     document.getElementById('selectAllBtn').addEventListener('click', () => {
       window.AndroidIME?.selectAllText?.();
       utilityBar.classList.remove('open');
-      syncHeightToAndroid();
     });
 
     document.getElementById('newLineBtn').addEventListener('click', () => {
       sendToAndroid('\n');
       utilityBar.classList.remove('open');
-      syncHeightToAndroid();
     });
 
-    voiceBtn.addEventListener('click', () => {
+    document.getElementById('voiceChipBtn').addEventListener('click', () => {
       playClickSound();
+      utilityBar.classList.remove('open');
       const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRec) return;
       const rec = new SpeechRec();
       rec.lang = languageMode === 'HI' ? 'hi-IN' : 'en-IN';
-      voiceBtn.classList.add('active');
       rec.onresult = (ev) => {
         sendToAndroid(ev.results[0][0].transcript + ' ');
       };
-      rec.onend = () => voiceBtn.classList.remove('active');
       rec.start();
     });
 
